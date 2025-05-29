@@ -1,0 +1,908 @@
+bus reervation  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Bus Ticket Reservation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1549921296-3a9fbceffb60?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Form -->
+  <div id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Reservation Form -->
+  <div id="reservationForm" class="hidden">
+    <h2>Bus Reservation</h2>
+    <input type="date" id="journeyDate" required>
+    <input type="text" id="passengerName" placeholder="Passenger Name" required>
+    <input type="number" id="age" placeholder="Age" required min="1">
+    <select id="gender" required>
+      <option value="">Select Gender</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+    <input type="number" id="seatNumber" placeholder="Seat Number" min="1" max="50" required>
+    <button onclick="submitReservation()">Reserve Ticket</button>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (username && password) {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('reservationForm').classList.remove('hidden');
+    } else {
+      alert('Please enter both username and password.');
+    }
+  }
+
+  function submitReservation() {
+    const date = document.getElementById('journeyDate').value;
+    const name = document.getElementById('passengerName').value.trim();
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const seat = document.getElementById('seatNumber').value;
+
+    if (date && name && age && gender && seat) {
+      alert(`Reservation Successful!\n\nName: ${name}\nDate: ${date}\nAge: ${age}\nGender: ${gender}\nSeat: ${seat}`);
+    } else {
+      alert('Please fill in all fields.');
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+LIBRARY 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1581092787764-6c1c6a1f85f5?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .book-list {
+      margin-top: 20px;
+      max-height: 150px;
+      overflow-y: auto;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .book-list p {
+      margin: 5px 0;
+      padding: 6px;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Form -->
+  <div id="loginForm">
+    <h2>Library Login</h2>
+    <select id="userType">
+      <option value="">Select User Type</option>
+      <option value="Student">Student</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Book Entry Form -->
+  <div id="bookForm" class="hidden">
+    <h2 id="welcomeText"></h2>
+    <input type="text" id="bookName" placeholder="Book Name" required>
+    <label for="issueDate">Date Issued</label>
+    <input type="date" id="issueDate" required>
+    <label for="returnDate">Return Date</label>
+    <input type="date" id="returnDate" required>
+    <button onclick="submitBook()">Submit Book</button>
+
+    <hr>
+    <h3>Search Book</h3>
+    <input type="text" id="searchInput" placeholder="Enter book name to search" oninput="searchBook()">
+    <div class="book-list" id="bookList"></div>
+  </div>
+</div>
+
+<script>
+  let bookDatabase = [];
+
+  function login() {
+    const userType = document.getElementById('userType').value;
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (userType && username && password) {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('bookForm').classList.remove('hidden');
+      document.getElementById('welcomeText').textContent = `${userType} Panel`;
+    } else {
+      alert("Please select user type and enter credentials.");
+    }
+  }
+
+  function submitBook() {
+    const bookName = document.getElementById('bookName').value.trim();
+    const issueDate = document.getElementById('issueDate').value;
+    const returnDate = document.getElementById('returnDate').value;
+
+    if (bookName && issueDate && returnDate) {
+      const bookRecord = {
+        name: bookName,
+        issue: issueDate,
+        return: returnDate
+      };
+      bookDatabase.push(bookRecord);
+
+      alert(`✅ Book Submitted\n\n📖 Book: ${bookName}\n📅 Issued: ${issueDate}\n📆 Return: ${returnDate}`);
+      document.getElementById('bookName').value = '';
+      document.getElementById('issueDate').value = '';
+      document.getElementById('returnDate').value = '';
+      displayBooks(bookDatabase);
+    } else {
+      alert("Please fill in all fields.");
+    }
+  }
+
+  function displayBooks(books) {
+    const bookList = document.getElementById('bookList');
+    bookList.innerHTML = '';
+    if (books.length === 0) {
+      bookList.innerHTML = '<p>No books found.</p>';
+    } else {
+      books.forEach(book => {
+        bookList.innerHTML += `<p><strong>${book.name}</strong><br>📅 Issued: ${book.issue} | 📆 Return: ${book.return}</p>`;
+      });
+    }
+  }
+
+  function searchBook() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = bookDatabase.filter(book => book.name.toLowerCase().includes(query));
+    displayBooks(filtered);
+  }
+</script>
+
+</body>
+</html>
+
+
+HOTEL BOOKKING
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Room Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/blue-diamond.png') repeat;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.96);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #004080;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #costDisplay {
+      font-weight: bold;
+      margin: 10px 0;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Form -->
+  <div id="loginForm">
+    <h2>Hotel Login</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Booking Form -->
+  <div id="bookingForm" class="hidden">
+    <h2>Room Booking</h2>
+    <select id="roomType" onchange="updateCost()">
+      <option value="">Select Room Type</option>
+      <option value="Single">Single - ₹1000/night</option>
+      <option value="Double">Double - ₹1800/night</option>
+      <option value="Suite">Suite - ₹3000/night</option>
+    </select>
+    <div id="costDisplay"></div>
+    <label>Check-In Date</label>
+    <input type="date" id="checkin" required>
+    <label>Check-Out Date</label>
+    <input type="date" id="checkout" required>
+    <button onclick="submitBooking()">Book Room</button>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (username && password) {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('bookingForm').classList.remove('hidden');
+    } else {
+      alert("Please enter username and password.");
+    }
+  }
+
+  function updateCost() {
+    const room = document.getElementById('roomType').value;
+    const costDisplay = document.getElementById('costDisplay');
+    let cost = "";
+
+    if (room === "Single") cost = "₹1000 per night";
+    else if (room === "Double") cost = "₹1800 per night";
+    else if (room === "Suite") cost = "₹3000 per night";
+
+    costDisplay.textContent = cost ? `Cost: ${cost}` : "";
+  }
+
+  function submitBooking() {
+    const room = document.getElementById('roomType').value;
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+
+    if (!room || !checkin || !checkout) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (new Date(checkin) >= new Date(checkout)) {
+      alert("Check-out date must be after check-in date.");
+      return;
+    }
+
+    alert(`✅ Booking Confirmed!\n\n🏨 Room: ${room}\n📅 Check-In: ${checkin}\n📆 Check-Out: ${checkout}`);
+  }
+</script>
+
+</body>
+</html>
+ 
+VEHICLE REG.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Online Vehicle Rental System</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #f4f6f8;
+    color: #333;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Container */
+  .container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* Header */
+  header {
+    background-color: #004080;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+  }
+
+  /* Navigation */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  nav button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  nav button:hover {
+    background: #0056b3;
+  }
+  nav button.active {
+    background: #003d80;
+  }
+
+  /* Section styles */
+  section {
+    background: white;
+    padding: 30px 35px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.1);
+    display: none;
+  }
+  section.active {
+    display: block;
+  }
+
+  /* Forms */
+  form {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  label {
+    display: block;
+    margin: 15px 0 6px;
+    font-weight: 600;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  button.submit-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px 0;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button.submit-btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Tables for Manage and View */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  button.approve-btn {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button.approve-btn:hover {
+    background-color: #1e7e34;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+      gap: 15px;
+    }
+    form {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>Online Vehicle Rental System</header>
+
+<nav>
+  <button class="tab-btn active" data-target="adminLogin">Admin Login</button>
+  <button class="tab-btn" data-target="userRegister">User Register</button>
+  <button class="tab-btn" data-target="userLogin">User Login</button>
+  <button class="tab-btn" data-target="searchVehicle">Search Vehicle</button>
+</nav>
+
+<div class="container">
+  <!-- Admin Login -->
+  <section id="adminLogin" class="active">
+    <h2>Admin Login</h2>
+    <form>
+      <label for="adminUsername">Username</label>
+      <input type="text" id="adminUsername" placeholder="Admin username" required />
+      <label for="adminPassword">Password</label>
+      <input type="password" id="adminPassword" placeholder="Password" required />
+      <button class="submit-btn" type="button" onclick="alert('Admin login demo - no real auth')">Login</button>
+    </form>
+
+    <hr style="margin: 40px 0" />
+
+    <!-- Add Vehicle -->
+    <h3>Add Vehicle</h3>
+    <form>
+      <label for="vehicleType">Vehicle Type</label>
+      <input type="text" id="vehicleType" placeholder="E.g. Sedan, SUV, Truck" required />
+      <label for="vehiclePrice">Price (₹ per day)</label>
+      <input type="number" id="vehiclePrice" placeholder="E.g. 1500" required min="0" />
+      <button class="submit-btn" type="button" onclick="alert('Vehicle added (demo)')">Add Vehicle</button>
+    </form>
+
+    <!-- Manage Vehicle details -->
+    <h3 style="margin-top: 40px;">Manage Vehicle Details</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Price (₹/day)</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sedan</td><td>1500</td><td><button onclick="alert('Edit/Delete demo')">Edit/Delete</button></td></tr>
+        <tr><td>SUV</td><td>2500</td><td><button onclick="alert('Edit/Delete demo')">Edit/Delete</button></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Manage Booking details -->
+    <h3 style="margin-top: 40px;">Manage Booking Details</h3>
+    <table>
+      <thead>
+        <tr><th>Booking ID</th><th>User Name</th><th>Vehicle Type</th><th>Status</th><th>Approve</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>John Doe</td>
+          <td>SUV</td>
+          <td>Pending</td>
+          <td><button class="approve-btn" onclick="alert('Booking approved (demo)')">Approve</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- User Register -->
+  <section id="userRegister">
+    <h2>User Registration</h2>
+    <form>
+      <label for="userName">Full Name</label>
+      <input type="text" id="userName" placeholder="Your full name" required />
+      <label for="userEmail">Email</label>
+      <input type="email" id="userEmail" placeholder="Your email" required />
+      <label for="userPassword">Password</label>
+      <input type="password" id="userPassword" placeholder="Password" required />
+      <button class="submit-btn" type="button" onclick="alert('User registered (demo)')">Register</button>
+    </form>
+  </section>
+
+  <!-- User Login -->
+  <section id="userLogin">
+    <h2>User Login</h2>
+    <form>
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button class="submit-btn" type="button" onclick="alert('User login demo - no real auth')">Login</button>
+    </form>
+  </section>
+
+  <!-- Search Vehicle -->
+  <section id="searchVehicle">
+    <h2>Search Vehicle Details</h2>
+    <form>
+      <label for="searchType">Vehicle Type</label>
+      <input type="text" id="searchType" placeholder="Enter vehicle type e.g. SUV" />
+      <button class="submit-btn" type="button" onclick="alert('Search function demo')">Search</button>
+    </form>
+
+    <h3 style="margin-top: 30px;">Available Vehicles</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Price (₹/day)</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sedan</td>
+          <td>1500</td>
+          <td><button onclick="alert('Booking vehicle demo')">Book Now</button></td>
+        </tr>
+        <tr>
+          <td>SUV</td>
+          <td>2500</td>
+          <td><button onclick="alert('Booking vehicle demo')">Book Now</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Booking Form -->
+    <h3 style="margin-top: 40px;">Make Booking</h3>
+    <form>
+      <label for="customerName">Name</label>
+      <input type="text" id="customerName" placeholder="Your name" required />
+      <label for="customerNo">Customer No.</label>
+      <input type="text" id="customerNo" placeholder="Contact number" required />
+      <label for="customerAddress">Address</label>
+      <textarea id="customerAddress" placeholder="Your address" rows="3" required></textarea>
+      <label for="bookingVehicleType">Vehicle Type</label>
+      <select id="bookingVehicleType" required>
+        <option value="">Select Vehicle</option>
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+      </select>
+      <button class="submit-btn" type="button" onclick="alert('Booking submitted (demo)')">Submit Booking</button>
+    </form>
+
+    <!-- Booking Status -->
+    <h3 style="margin-top: 40px;">View Booking Status</h3>
+    <table>
+      <thead>
+        <tr><th>Booking ID</th><th>Vehicle Type</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>SUV</td><td>Approved</td></tr>
+        <tr><td>2</td><td>Sedan</td><td>Pending</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+  // Simple tab navigation
+  const tabs = document.querySelectorAll('nav button.tab-btn');
+  const sections = document.querySelectorAll('section');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active from all buttons
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Show correct section
+      const target = btn.dataset.target;
+      sections.forEach(sec => {
+        if (sec.id === target) sec.classList.add('active');
+        else sec.classList.remove('active');
+      });
+      window.scrollTo(0, 0);
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+
+PHONE BILL PAYMENT
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electricity Bill Payment</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e0f0ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #004080;
+    }
+
+    .payment-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 64, 128, 0.15);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: 1.2px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      border-color: #004080;
+      outline: none;
+      box-shadow: 0 0 6px #004080aa;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 0;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background-color: #004080;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .payment-container {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h2>Electricity Bill Payment</h2>
+    <form>
+      <label for="customerId">Customer ID</label>
+      <input type="text" id="customerId" name="customerId" placeholder="Enter your Customer ID" required />
+
+      <label for="customerName">Full Name</label>
+      <input type="text" id="customerName" name="customerName" placeholder="Enter your full name" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+      <label for="billAmount">Bill Amount (₹)</label>
+      <input type="number" id="billAmount" name="billAmount" placeholder="Enter bill amount" min="1" required />
+
+      <label for="paymentMethod">Payment Method</label>
+      <select id="paymentMethod" name="paymentMethod" required>
+        <option value="" disabled selected>Select payment method</option>
+        <option value="creditCard">Credit Card</option>
+        <option value="debitCard">Debit Card</option>
+        <option value="netBanking">Net Banking</option>
+        <option value="upi">UPI</option>
+        <option value="wallet">Mobile Wallet</option>
+      </select>
+
+      <button type="submit">Pay Now</button>
+    </form>
+  </div>
+
+</body>
+</html>
+
+
+    
